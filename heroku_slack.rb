@@ -44,7 +44,7 @@ class HerokuSlack
   end
 
   def notify_slack(params)
-    if sha = params["sha"]
+    if sha = params["head"]
       if prev_sha
         params["diff"] = html_diffs(sha)
       end

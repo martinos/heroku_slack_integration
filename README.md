@@ -1,6 +1,8 @@
 # Heroku Slack Integration
 
 ## Installation
+
+### Configure Slack WebHook
 1. Open your slack browser
 2. Click the down arrow near your user name and select the "Configure Integratoin"
 ![](https://dl.dropboxusercontent.com/u/1228036/images/76313e208c6f95af38b1aaf39447ace9.jpg)
@@ -16,3 +18,12 @@
 ```bash
 SLACK_WEBHOOK_URL=<WEBHOOK_URL>
 ```
+
+### Deployment on Heroku
+
+Configure slack webhook env variable
+
+    heroku config:set SLACK_WEBHOOK_URL=YOUR_WEBHOOK_URL
+    heroku addons:create deployhooks:http --url=https://my_app.herokuapp.com/_deploy
+
+

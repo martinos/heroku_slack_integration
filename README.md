@@ -26,6 +26,7 @@ Configure slack webhook env variable
 
 ```bash
 heroku config:set SLACK_WEBHOOK_URL=YOUR_WEBHOOK_URL
+heroku addons:create heroku-postgresql:hobby-dev
 heroku config:set DATABASE_URL=YOUR_DB_NAME
 heroku addons:create deployhooks:http --url=https://my_app.herokuapp.com/_deploy
 ```
@@ -56,4 +57,3 @@ GITHUB_OAUTH_TOKEN="PASTE_YOUR_GITHUB_TOKEN_HERE"
 ```
 heroku config:set GITHUB_OAUTH_TOKEN=PASTE_YOUR_GITHUB_TOKEN_HERE
 ```
-

@@ -1,5 +1,6 @@
 require 'bundler'
 Bundler.setup
+require 'data_mapper'
 require 'logger'
 
 APP_ROOT = File.expand_path(File.dirname(File.join(__FILE__)))

@@ -47,7 +47,7 @@ class HerokuSlack
         changes = @gh.changes(prev_sha, sha)
 
         params["diff"] = changes.diff_url
-        params["files"] = changes.files.map(&:name)
+        params["files"] = changes.files.map{|file| file[:name]}
         params["changelog"] = changes.release_notes
       end
       store_sha(sha)

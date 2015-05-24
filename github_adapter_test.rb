@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require './github_adapter'
+require 'pry-nav'
 
 describe GithubAdapter do
   before do

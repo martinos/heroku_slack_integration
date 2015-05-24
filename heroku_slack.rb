@@ -42,6 +42,7 @@ class HerokuSlack
   end
 
   def notify_slack(params)
+    changelog = nil
     if sha = params["head"]
       if prev_sha
         changes = @gh.changes(prev_sha, sha)
@@ -50,11 +51,11 @@ class HerokuSlack
         params["files"] = changes.files.map do |file| 
           file[:name] + " " + "-" * file[:deletions] + "+" * file[:additions]
         end
-        params["changelog"] = changes.release_notes
+        changelog = changes.release_notes
       end
       store_sha(sha)
     end
-    @client.notify(params.to_yaml)
+    @client.notify(params.to_yaml + "\n" + "Changelog:\n" + changelog )
   end
 end
 

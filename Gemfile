@@ -7,6 +7,8 @@ gem 'thin'
 gem 'rake'
 gem 'data_mapper'
 gem 'dm-postgres-adapter'
+gem 'github_api'
+
 
 group 'development' do
   gem 'dm-sqlite-adapter'

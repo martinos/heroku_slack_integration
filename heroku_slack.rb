@@ -1,5 +1,6 @@
 require 'yaml'
 require 'slack-notify'
+require 'github_adapter'
 
 class HerokuSlack
   def initialize
@@ -11,8 +12,9 @@ class HerokuSlack
       icon_emoji: ":shipit:",
       link_names: 1
     )
-    @gh_user = "martinos"
-    @gh_project = "heroku_slack_integration"
+    @gh = GithubAdapter.new(user: 'martinos', 
+                            project: "heroku_slack_integration",
+                            oauth_token: ENV['GITHUB_OAUTH_TOKEN'])
   end
 
   def call(env)
@@ -20,10 +22,6 @@ class HerokuSlack
     params = req.params
     notify_slack(params)
     ['200', {'Content-Type' => 'text/plain'}, [req.to_yaml + "\n" + params.to_yaml]]
-  end
-
-  def html_diffs(new_sha)
-    "https://github.com/#{@gh_user}/#{@gh_project}/compare/#{prev_sha}...#{new_sha}"
   end
 
   def store_sha(sha)
@@ -46,7 +44,11 @@ class HerokuSlack
   def notify_slack(params)
     if sha = params["head"]
       if prev_sha
-        params["diff"] = html_diffs(sha)
+        changes = @gh.changes(prev_sha, sha)
+
+        params["diff"] = changes.diff_url
+        params["files"] = changes.files.map(&:name)
+        params["changelog"] = changes.release_notes
       end
       store_sha(sha)
     end

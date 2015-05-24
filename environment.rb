@@ -1,19 +1,21 @@
 require 'bundler'
 Bundler.setup
+
 require 'data_mapper'
 require 'logger'
 
 APP_ROOT = File.expand_path(File.dirname(File.join(__FILE__)))
 RACK_ENV = ENV['RACK_ENV'] || "development";
 
-LOGGER = Logger.new(STDOUT)
-
-$LOAD_PATH.unshift(APP_ROOT)
-
 require 'dotenv'
+
 Dotenv.load(
     File.expand_path(".#{RACK_ENV}.env"),
     File.expand_path(".env") )
+
+LOGGER = Logger.new(STDOUT)
+
+$LOAD_PATH.unshift(APP_ROOT)
 
 require 'data_mapper'
 DataMapper.setup(:default, ENV["DATABASE_URL"] || "sqlite3://#{APP_ROOT}/db/#{RACK_ENV}.db")
